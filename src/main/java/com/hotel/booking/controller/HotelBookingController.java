@@ -4,7 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import com.hotel.booking.entity.Room;
 import com.hotel.booking.entity.User;
 import com.hotel.booking.service.HotelBookingService;
 
@@ -39,15 +43,27 @@ public class HotelBookingController {
 
 	@GetMapping("/login") // testing purpose get it will be post after 
 	public String login(Model model,HttpSession session) {
-		User currentUser = hotelBookingService.getUser().get(0);
-		this.hotelBookingService.login(currentUser, session);
-		return "redirect:/";
+		if(this.hotelBookingService.checkAuth(session) == null) {			
+			return "screen/login";
+		}else {
+			return "redirect:/";
+		}
 	}
 	
 	@GetMapping("/logout") // testing purpose get it will be post after 
 	public String logout(Model model,HttpSession session) {
 		this.hotelBookingService.login(null, session);
 		return "redirect:/";
+	}
+	
+	@PostMapping("/booking/create")
+	public String booking(@ModelAttribute Room room, HttpSession session) {
+		System.out.print(room);
+		if(this.hotelBookingService.checkAuth(session) != null) {			
+			return "screen/index";
+		}else {
+			return "redirect:/login";
+		}
 	}
 	
 //	@GetMapping("/testing")
