@@ -1,50 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-  <mapper namespace="com.hotel.booking.repository.HotelBookingMapper">
-	  
-  <!-- User -->
-  <resultMap type="com.hotel.booking.entity.User" id="user">
-    <id column="id" property="id"/>
-    <result column="username" property="username"/>
-    <result column="email" property="email"/>
-    <result column="password" property="password"/>
-    <result column="created_at" property="createdAt"/>
-    <result column="updated_at" property="updatedAt"/>
-  </resultMap>
-  
-   <!-- Room -->
-   <resultMap id="room" type="com.hotel.booking.entity.Room">
-	   <id column="id" property="id"/>
-	   <result column="room_number" property="roomNumber"/> 
-	   <result column="lend_flag" property="lendFlag"/> 
-	   <result column="created_at" property="createdAt"/>
-       <result column="updated_at" property="updatedAt"/> 
-   </resultMap>
-   
-   <!-- Booking -->
-  <resultMap id="booking" type="com.hotel.booking.entity.Booking">
-	  <id column="id" property="id"/>
-	  <result column="date" property="date"/>
-	  <result column="room_id" property="roomId"/>
-	  <result column="user_id" property="userId"/>
-	  <result column="created_at" property="createdAt"/>
-      <result column="updated_at" property="updatedAt"/>  
-  </resultMap>
+<mapper namespace="com.hotel.booking.repository.HotelBookingMapper">
 
-  <select id="getUser" resultMap="user">
-    SELECT *
-    FROM users
-  </select>
-  
-  <select id="getRoom" resultMap="room">
-    SELECT *
-    FROM rooms
-  </select>
-  
-   <select id="getBooking" resultMap="booking">
-    SELECT *
-    FROM booking
-  </select>
+	<!-- User -->
+	<resultMap type="com.hotel.booking.entity.User" id="user">
+		<id column="id" property="id" />
+		<result column="username" property="username" />
+		<result column="email" property="email" />
+		<result column="password" property="password" />
+		<result column="created_at" property="createdAt" />
+		<result column="updated_at" property="updatedAt" />
+	</resultMap>
 
-  </mapper>
+	<!-- Room -->
+	<resultMap id="room" type="com.hotel.booking.entity.Room">
+		<id column="id" property="id" />
+		<result column="room_number" property="roomNumber" />
+		<result column="lend_flag" property="lendFlag" />
+		<result column="created_at" property="createdAt" />
+		<result column="updated_at" property="updatedAt" />
+	</resultMap>
+
+	<!-- Booking -->
+	<resultMap id="booking" type="com.hotel.booking.entity.Booking">
+		<id column="id" property="id" />
+		<result column="date" property="date" />
+		<result column="room_id" property="roomId" />
+		<result column="user_id" property="userId" />
+		<result column="created_at" property="createdAt" />
+		<result column="updated_at" property="updatedAt" />
+	</resultMap>
+
+	<resultMap id="roomBooking" type="com.hotel.booking.entity.RoomBooking">
+		<id column="id" property="id" />
+		<result column="room_number" property="roomNumber" />
+		<result column="lend_flag" property="lendFlag" />
+		<result column="user_id" property="bookUserId" />
+	</resultMap>
+
+	<select id="getRoomBooking" resultMap="roomBooking">
+		SELECT r.id,r.room_number,r.lend_flag,(SELECT bb.user_id FROM booking bb
+		WHERE bb.id = MAX(b.id))
+		FROM rooms r
+		LEFT OUTER JOIN booking b
+		ON r.id = b.room_id
+		GROUP BY r.id,r.room_number,r.lend_flag
+		ORDER BY r.id;
+	</select>
+	<select id="getUser" resultMap="user">
+		SELECT *
+		FROM users
+	</select>
+
+	<select id="getRoom" resultMap="room">
+		SELECT *
+		FROM rooms
+	</select>
+
+	<select id="getBooking" resultMap="booking">
+		SELECT *
+		FROM booking
+	</select>
+
+</mapper>

@@ -21,6 +21,7 @@ public class HotelBookingController {
 	
 	@GetMapping("/")
 	public String index(Model model,HttpSession session) {
+		System.out.println(this.hotelBookingService.getRoomBooking());
 		model.addAttribute("rooms",this.hotelBookingService.getRoom());
 		model.addAttribute("Auth",this.hotelBookingService.checkAuth(session));
 		return "screen/index";
@@ -71,6 +72,8 @@ public class HotelBookingController {
 			return "redirect:/login";
 		}
 	}
+	
+	
 	
 //	@GetMapping("/testing")
 //	public String test(Model model, HttpSession session) {

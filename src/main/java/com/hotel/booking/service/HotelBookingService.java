@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hotel.booking.entity.Room;
+import com.hotel.booking.entity.RoomBooking;
 import com.hotel.booking.entity.User;
 import com.hotel.booking.repository.HotelBookingMapper;
 
@@ -17,6 +18,10 @@ public class HotelBookingService {
 	@Autowired
 	HotelBookingMapper hotelBookingMapper; 
 	
+	public List<RoomBooking> getRoomBooking(){
+		return this.hotelBookingMapper.getRoomBooking();
+		
+	}	
 	
 	public List<Room> getRoom(){
 		return this.hotelBookingMapper.getRoom();
