@@ -24,16 +24,20 @@
 </head>
 <body>
  	<!-- Header -->
- 	<div th:fragment="header(title)" class="text-center py-4 bg-dark text-light mb-5" >
- 		<div th:text="${title}"></div>
- 	</div>
- 	
- 	<!-- Footer -->
- 	<div th:fragment="footer(left,right)" class="py-3 bg-dark text-light" style="position: fixed; bottom: 0; width: 100%">
- 		<div class="container d-flex flex-row justify-content-between">
- 			<div th:text="${left}"></div>
- 			<div th:text="${right}"></div>
+ 	<div th:fragment="header(Auth)" class="text-dark text-center py-4 text-light mb-5" style="background-color: #E2F0FF">
+ 		<div class="mx-auto w-50 d-flex flex-row justify-content-between">
+ 			<div style="font-weight: bold" class="h4">部屋の予約</div>
+ 			<div class="col-6 d-flex flex-row justify-content-end">
+ 				<a th:href="@{/}" class="text-primary my-auto" style="margin-right: 30px;text-decoration: none">部屋一覧</a>
+ 				
+ 				<div class="d-flex flex-row items-center">
+ 					<a th:href="@{/login}" th:if="${Auth==null}" class="my-auto btn btn-primary" style="margin-right: 10px">ログイン</a>
+ 					<div th:if="${Auth}" th:text="${Auth.username}" class="my-auto" style="margin-right: 10px"></div>
+ 					<div th:if="${Auth}" class="btn btn-warning"><i class="bi bi-box-arrow-right"></i></div>
+ 				</div>
+ 			</div>	
  		</div>
  	</div>
+
 </body>
 </html>
