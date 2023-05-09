@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.hotel.booking.entity.Booking;
 import com.hotel.booking.entity.Room;
 import com.hotel.booking.entity.User;
 
@@ -14,5 +15,8 @@ public interface HotelBookingMapper {
 	
 	// Get room
 	public List<Room> getRoom();
+	
+	// Get booking
+	public List<Booking> getBooking();
 	
 }
