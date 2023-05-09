@@ -17,4 +17,10 @@ public class HotelBookingController {
 		System.out.println(this.hotelBookingMapper.getUser());
 		return "screen/index";
 	}
+	
+	@GetMapping("/hotel/room/get")
+	public String getRooms() {
+		System.out.println(this.hotelBookingMapper.getRoom());
+		return "screen/index";
+	}
 }

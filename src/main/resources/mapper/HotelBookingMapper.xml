@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
   <mapper namespace="com.hotel.booking.repository.HotelBookingMapper">
-
+	  
+  <!-- User -->
   <resultMap type="com.hotel.booking.entity.User" id="user">
     <id column="id" property="id"/>
     <result column="username" property="username"/>
@@ -11,10 +12,26 @@
     <result column="created_at" property="createdAt"/>
     <result column="updated_at" property="updatedAt"/>
   </resultMap>
+  
+   <!-- Room -->
+   <resultMap id="room" type="com.hotel.booking.entity.Room">
+	   <id column="id" property="id"/>
+	   <result column="room_number" property="roomNumber"/> 
+	   <result column="lend_flag" property="lendFlag"/> 
+	   <result column="created_at" property="createdAt"/>
+       <result column="updated_at" property="updatedAt"/> 
+   </resultMap>
+   
+   <!-- Booking -->
 
   <select id="getUser" resultMap="user">
     SELECT *
     FROM users
+  </select>
+  
+  <select id="getRoom" resultMap="room">
+    SELECT *
+    FROM rooms
   </select>
 
   </mapper>
