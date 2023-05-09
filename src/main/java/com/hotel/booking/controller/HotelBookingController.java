@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.hotel.booking.entity.User;
@@ -44,8 +45,11 @@ public class HotelBookingController {
 	public String login(Model model,HttpSession session) {
 		User currentUser = hotelBookingMapper.getUser().get(1);
 		this.hotelBookingService.login(currentUser, session);
-		return "redirect:/";
+//		model.addAttribute("user",this.hotelBookingService.checkAuth(session));
+		return "screen/login";
 	}
+	
+
 	
 //	@GetMapping("/testing")
 //	public String test(Model model, HttpSession session) {
