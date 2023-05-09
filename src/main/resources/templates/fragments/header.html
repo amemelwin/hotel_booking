@@ -33,7 +33,7 @@
  				<div class="d-flex flex-row items-center">
  					<a th:href="@{/login}" th:if="${Auth==null}" class="my-auto btn btn-primary" style="margin-right: 10px">ログイン</a>
  					<div th:if="${Auth}" th:text="${Auth.username}" class="my-auto" style="margin-right: 10px"></div>
- 					<div th:if="${Auth}" class="btn btn-warning"><i class="bi bi-box-arrow-right"></i></div>
+ 					<a th:href="@{/logout}" th:if="${Auth}" class="btn btn-warning"><i class="bi bi-box-arrow-right"></i></a>
  				</div>
  			</div>	
  		</div>

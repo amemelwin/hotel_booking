@@ -4,7 +4,11 @@
 <body>
  	<div th:replace="fragments/header.html :: header(Auth=${Auth})"></div>
  	
- 	
-
+ 	<div class="mx-atuo w-75" th:each="room : ${rooms}" th:object="${room}">
+ 		<div class="">
+ 			<div th:text="*{roomNumber}"></div>
+ 		
+ 		</div>
+ 	</div>
 </body>
 </html>
