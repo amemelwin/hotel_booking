@@ -6,10 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.hotel.booking.entity.Room;
-import com.hotel.booking.entity.User;
 import com.hotel.booking.service.HotelBookingService;
 
 import jakarta.servlet.http.HttpSession;
@@ -50,17 +48,25 @@ public class HotelBookingController {
 		}
 	}
 	
+	@PostMapping("/login") // testing purpose get it will be post after 
+	public String login(HttpSession session) {
+		this.hotelBookingService.login(this.hotelBookingService.getUser().get(0), session);
+		return "redirect:/";
+	}
+	
+
 	@GetMapping("/logout") // testing purpose get it will be post after 
 	public String logout(Model model,HttpSession session) {
 		this.hotelBookingService.login(null, session);
 		return "redirect:/";
 	}
+
 	
 	@PostMapping("/booking/create")
 	public String booking(@ModelAttribute Room room, HttpSession session) {
-		System.out.print(room);
-		if(this.hotelBookingService.checkAuth(session) != null) {			
-			return "screen/index";
+		
+		if(this.hotelBookingService.checkAuth(session) != null) {
+			return "redirect:/";
 		}else {
 			return "redirect:/login";
 		}
