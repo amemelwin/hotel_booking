@@ -33,6 +33,12 @@ public class HotelBookingController {
 		System.out.println(this.hotelBookingMapper.getRoom());
 		return "screen/index";
 	}
+	
+	@GetMapping("/hotel/booking/get")
+	public String getBooking() {
+		System.out.println(this.hotelBookingMapper.getBooking());
+		return "screen/index";
+	}
 
 	@GetMapping("/login") // testing purpose get it will be post after 
 	public String login(Model model,HttpSession session) {

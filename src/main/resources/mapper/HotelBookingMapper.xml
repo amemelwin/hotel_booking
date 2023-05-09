@@ -23,6 +23,14 @@
    </resultMap>
    
    <!-- Booking -->
+  <resultMap id="booking" type="com.hotel.booking.entity.Booking">
+	  <id column="id" property="id"/>
+	  <result column="date" property="date"/>
+	  <result column="room_id" property="roomId"/>
+	  <result column="user_id" property="userId"/>
+	  <result column="created_at" property="createdAt"/>
+      <result column="updated_at" property="updatedAt"/>  
+  </resultMap>
 
   <select id="getUser" resultMap="user">
     SELECT *
@@ -32,6 +40,11 @@
   <select id="getRoom" resultMap="room">
     SELECT *
     FROM rooms
+  </select>
+  
+   <select id="getBooking" resultMap="booking">
+    SELECT *
+    FROM booking
   </select>
 
   </mapper>
