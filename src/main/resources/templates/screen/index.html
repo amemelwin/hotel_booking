@@ -2,79 +2,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/common :: head('Hotel Booking System')"></head>
 <body>
-	<div th:replace="fragments/header.html :: header(Auth=${Auth})"></div>
+	<div th:replace="fragments/header :: header(Auth=${Auth})"></div>
 
 	<div class="mx-auto w-50">
-		<div class="mb-3">部屋一覧</div>
-		<div class="row d-flex flex-row justify-content-between parent">
-			<div class="col-3" th:each="room : ${rooms}" th:object="${room}">
-				<div th:id="*{id}" th:flag="*{lendFlag}" th:choose="0"
-					class="text-center py-5 border room" th:text="*{roomNumber}"
-					style="border-radius: 15px; margin-bottom: 20px; user-select: none;"
-					th:styleappend="*{lendFlag==1} ? 'background-color: #E1E1E1;cursor: not-allowed! important;' : 'background-color: white; cursor: pointer' "></div>
-			</div>
-			<form th:action="@{/booking/create}" method="post">
-				<input name="id" type="hidden" value="0">
-			</form>
+		<div class="my-2">部屋一覧</div>
+		
+		<div class="row d-flex flex-row justify-content-between">		
+			<div class="col-3" th:each="room : ${rooms}" th:object="${room}" >
 				<div 
-					id="cretae-booking"
-					room-id=""
-					class="btn btn-primary mt-3 d-flex flex-row justify-content-center"
-					style="height: 45px; border-radius: 10px">予約</div>
+					class="text-center py-5 border" 
+					th:text="*{roomNumber}" 
+					style="border-radius: 10px;margin-bottom: 20px; user-select: none;"
+					th:styleappend="*{lendFlag==1}? 'background-color: #E1E1E1;cursor: not-allowed! important;':'background-color: white;cursor:pointer'"
+				></div>
+			</div>
 		</div>
-
 	</div>
-	<script>
-		$(document).ready(function() {
-			// select
-			$('.room').click(function(e) {
-				let id = this.id;
-				let avaliable = $(this).attr('flag') == 0 ? true : false;
-				let isSelected = $(this).attr('choose') == 1 ? true : false;
-				if (avaliable) {
-					if (isSelected) {
-						$(this).css('background-color', 'white');
-						$(this).attr('choose', '0');
-						$('#cretae-booking').attr('room-id','');
-						$('input[name="id"]').attr('value','');
-					} else {
-						$(this).css('background-color', '#09E705');
-						$(this).attr('choose', '1');
-						$('#cretae-booking').attr('room-id',id);
-						$('input[name="id"]').attr('value',id);
-						release(id);
-					}
-
-				}
-			});
-			// relse
-			const release = (current)=>{
-				$('.parent > div > div').each(function() {
-					let id = this.id;
-					let avaliable = $(this).attr('flag') == 0 ? true : false;
-					// let isSelected = $(this).attr('choose') == 1 ? true : false;
-					// console.log($(this)); //log every element found to console output
-					if(current!=id && avaliable){
-						$(this).css('background-color', 'white');
-						$(this).attr('choose', '0');
-					}
-				});
-			}
-			// booking function
-			// th:action="@{/booking/create}"
-			$("#cretae-booking").click((e)=>{
-				let btn = $("#cretae-booking");
-				let roomId = btn.attr('room-id');
-				if(roomId){
-					$("form").submit();
-				}else{
-					alert("Please Select Room First");
-				}
-			});
-			const booking = ()=>{
-				
-			}
-		});
-	</script>
 </body>
 </html>
