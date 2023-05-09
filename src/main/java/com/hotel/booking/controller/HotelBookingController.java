@@ -33,7 +33,7 @@ public class HotelBookingController {
 	
 	@GetMapping("/hotel/booking/get")
 	public String getBooking() {
-		System.out.println(this.hotelBookingMapper.getBooking());
+//		System.out.println(this.hotelBookingMapper.getBooking());
 		return "screen/index";
 	}
 
