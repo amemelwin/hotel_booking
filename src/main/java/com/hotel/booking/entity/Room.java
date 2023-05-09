@@ -11,6 +11,4 @@ public class Room {
 	private int lendFlag;
 	private Date createdAt;
 	private Date updatedAt;
-	
-
 }
