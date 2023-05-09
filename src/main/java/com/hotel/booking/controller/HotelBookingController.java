@@ -21,8 +21,7 @@ public class HotelBookingController {
 	
 	@GetMapping("/")
 	public String index(Model model,HttpSession session) {
-		System.out.println(this.hotelBookingService.getRoomBooking());
-		model.addAttribute("rooms",this.hotelBookingService.getRoom());
+		model.addAttribute("rooms",this.hotelBookingService.getRoomBooking());
 		model.addAttribute("Auth",this.hotelBookingService.checkAuth(session));
 		return "screen/index";
 	}
@@ -51,7 +50,7 @@ public class HotelBookingController {
 	
 	@PostMapping("/login") // testing purpose get it will be post after 
 	public String login(HttpSession session) {
-		this.hotelBookingService.login(this.hotelBookingService.getUser().get(0), session);
+		this.hotelBookingService.login(this.hotelBookingService.getUser().get(1), session);
 		return "redirect:/";
 	}
 	
