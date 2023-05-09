@@ -8,7 +8,7 @@ Drop Table If Exists booking;
 Create Table users (
 	id SERIAL NOT NULL,
 	username varchar(199) NOT NULL,
-	email varchar(199) NOT NULL,
+	email VARCHAR (50) UNIQUE NOT NULL,
 	password text NOT NULL,
 	created_at timestamp Default now(),
 	updated_at timestamp Default now(),
