@@ -31,6 +31,10 @@ public class HotelBookingService {
 		this.hotelBookingMapper.updateRoom(roomId, lendFlag);
 	}
 
+	public void cancelBooking(int bookingId) {
+		this.hotelBookingMapper.cancelBooking(bookingId);
+	}
+	
 	public List<Room> getRoom() {
 		return this.hotelBookingMapper.getRoom();
 	}

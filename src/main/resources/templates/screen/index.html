@@ -15,7 +15,7 @@
 
 			<div th:if="${Auth}" class="col-3" th:each="room : ${rooms}"
 				th:object="${room}">
-				<div th:if="${Auth.id==room.bookUserId}" th:cancel-able="1"
+				<div th:if="${Auth.id==room.bookUserId}" th:cancel-able="1" th:book-id="*{bookingId}"
 					th:id="*{id}" th:flag="*{lendFlag}" th:choose="0"
 					class="text-center py-5 border room" th:text="*{roomNumber}"
 					style="border-radius: 15px; margin-bottom: 20px; user-select: none;"
@@ -73,6 +73,7 @@
 				let avaliable = $(this).attr('flag') == 0 ? true : false;
 				let isSelected = $(this).attr('choose') == 1 ? true : false;
 				let cancelAble = $(this).attr('cancel-able') == 1? true : false;
+				let bookingId = $(this).attr('book-id');
 				let roomNumber = $(this).text();
 				if (avaliable) {
 					if (isSelected) {
@@ -97,8 +98,14 @@
 						}
 					})
 					modelBody.text(roomNumber +' '+ modelBody.text());
-					cancelModel.modal('show');
 					// search and injection of Model's Body text
+					// inject id to form
+					let idInput = $('#cancelRoomModel > div > div > form > input[name="id"]');
+					let bookingIdInput = $('#cancelRoomModel > div > div > form > input[name="bookingId"]');					
+					idInput.attr('value',id);
+					bookingIdInput.attr('value',bookingId);
+					// inject id to form
+					cancelModel.modal('show');
 				}
 			});
 			// relse

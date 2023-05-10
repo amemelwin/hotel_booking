@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.hotel.booking.entity.Room;
+import com.hotel.booking.entity.RoomBooking;
 import com.hotel.booking.entity.User;
 import com.hotel.booking.service.HotelBookingService;
 
@@ -27,7 +28,6 @@ public class HotelBookingController {
 		return "screen/index";
 	}
 	
-
 	@GetMapping("/hotel/room/get")
 	public String getRooms() {
 		System.out.println(this.hotelBookingService.getRoom());
@@ -75,7 +75,18 @@ public class HotelBookingController {
 		}
 	}
 	
-	
+	@PostMapping("/booking/cancel")
+	public String cancelBooking(@ModelAttribute RoomBooking room,HttpSession session) {
+		User auth = this.hotelBookingService.checkAuth(session);
+		if( auth != null) {
+			System.out.println(room);
+			this.hotelBookingService.cancelBooking(room.getBookingId());
+			this.hotelBookingService.updateRoom(room.getId(), 0);
+			return "redirect:/";
+		}else {
+			return "redirect:/login";
+		}
+	}
 	
 //	@GetMapping("/testing")
 //	public String test(Model model, HttpSession session) {

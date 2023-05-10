@@ -59,6 +59,14 @@
 		booking(date,room_id,user_id)
 		VALUES (now(),#{roomId},#{userId});
 	</insert>
+	
+	<!-- Cancel Booking -->
+	<update id="cancelBooking">
+		UPDATE booking
+		SET deleted_at=now()
+		WHERE id=#{bookingId}
+	</update>
+		
 	<update id="updateRoom">
 		UPDATE rooms
 		SET lend_flag=#{lendFlag},
