@@ -2,9 +2,9 @@ package com.hotel.booking.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.hotel.booking.entity.Room;
 import com.hotel.booking.entity.RoomBooking;
@@ -50,5 +50,12 @@ public class HotelBookingService {
 
 	public void login(User user, HttpSession session) {
 		session.setAttribute("Auth", user);
+	}
+	
+	// delivery agent for model alert
+	public void msgDeliveryAgent(Model model,HttpSession session) {
+		// screen/index.html => input 'order-success'
+		model.addAttribute("orderSuccess",session.getAttribute("orderSuccess"));
+		session.setAttribute("orderSuccess","");
 	}
 }

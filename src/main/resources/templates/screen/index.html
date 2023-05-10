@@ -3,8 +3,7 @@
 <head th:replace="fragments/common :: head('Hotel Booking System')"></head>
 <body>
 	<!-- reciever -->
-	<input type="hidden" name="order-success" value="0">
-	
+	<input type="hidden" name="order-success" th:value="${orderSuccess}">
 	<!-- reciever -->
 	
 	<div th:replace="fragments/header.html :: header(Auth=${Auth})"></div>
@@ -51,9 +50,11 @@
 	</div>
 	<!-- MOdels -->
 	<div th:replace="fragments/cancel_model :: cancelRoomModel"></div>
+	<div th:replace="fragments/success_model :: successBookingModel"></div>
 	<!-- MOdels -->
 	<script>
 		$(document).ready(function() {
+			// cancel MOdel
 			// model on close event
 			$('#cancelRoomModel').on("hidden.bs.modal", function () {
 				let modelContents = $('#cancelRoomModel > div > div').children();
@@ -65,7 +66,25 @@
 				})
 				modelBody.text('の予約をキャンセルします、よろしいでしょうか？');
 			});
+			$('#cancelRoomModel-close').click(()=>{
+				$('#cancelRoomModel').modal('hide');
+			})
 			// model on close event
+			
+			// cancel MOdel
+			
+			// success Model 
+			$('#successBookingModel-close').click(()=>{
+				$('#successBookingModel').modal('hide');
+			})
+			
+			// check msg from msgDeliveryAgent
+			let orderSuccess = $("input[name='order-success']");
+			if(orderSuccess.attr('value')){
+				$("#successBookingModel > div > div > div[name='modal-body']").text(orderSuccess.attr('value'));
+				$("#successBookingModel").modal('show');
+			}
+			// success Model
 			
 			// select
 			$('.room').click(function(e) {
