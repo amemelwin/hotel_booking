@@ -4,7 +4,7 @@
 <mapper namespace="com.hotel.booking.repository.HotelBookingMapper">
 
 	<!-- User -->
-	<resultMap type="com.hotel.booking.entity.User" id="user">
+	<resultMap type="com.hotel.booking.entity.User" id="userResult">
 		<id column="id" property="id" />
 		<result column="username" property="username" />
 		<result column="email" property="email" />
@@ -14,7 +14,7 @@
 	</resultMap>
 
 	<!-- Room -->
-	<resultMap id="room" type="com.hotel.booking.entity.Room">
+	<resultMap type="com.hotel.booking.entity.Room" id="roomResult">
 		<id column="id" property="id" />
 		<result column="room_number" property="roomNumber" />
 		<result column="lend_flag" property="lendFlag" />
@@ -23,7 +23,7 @@
 	</resultMap>
 
 	<!-- Booking -->
-	<resultMap id="booking" type="com.hotel.booking.entity.Booking">
+	<resultMap type="com.hotel.booking.entity.Booking" id="bookingResult" >
 		<id column="id" property="id" />
 		<result column="date" property="date" />
 		<result column="room_id" property="roomId" />
@@ -34,14 +34,14 @@
 	</resultMap>
 
 	<!-- login -->
-	<select id="login" resultMap="user">
+	<select id="login" resultMap="userResult">
 		SELECT id,username,email
 		FROM users
 		WHERE email=#{email} AND password=#{password}
 	</select>
 
 	<!-- Room Booking -->
-	<resultMap id="roomBooking" type="com.hotel.booking.entity.RoomBooking">
+	<resultMap type="com.hotel.booking.entity.RoomBooking" id="roomBookingResult">
 		<id column="id" property="id" />
 		<result column="room_number" property="roomNumber" />
 		<result column="lend_flag" property="lendFlag" />
@@ -49,7 +49,7 @@
 		<result column="booking_id" property="bookingId" />
 	</resultMap>
 
-	<select id="getRoomBooking" resultMap="roomBooking">
+	<select id="getRoomBooking" resultMap="roomBookingResult">
 		SELECT
 		r.id,r.room_number,r.lend_flag,
 		(SELECT bb.user_id FROM booking bb WHERE bb.id = MAX(b.id)),
@@ -83,7 +83,7 @@
 	</update>
 	
 	<!-- Check Email Duplicate-->
-	<select id="checkEmail" resultMap="user">
+	<select id="checkEmail" resultMap="userResult">
 		SELECT * FROM users WHERE email=#{email}
 	</select>
 	
@@ -94,17 +94,17 @@
 		VALUES(#{username},#{email},#{password})
 	</insert>
 	
-	<select id="getUser" resultMap="user">
+	<select id="getUser" resultMap="userResult">
 		SELECT *
 		FROM users
 	</select>
 
-	<select id="getRoom" resultMap="room">
+	<select id="getRoom" resultMap="roomResult">
 		SELECT *
 		FROM rooms
 	</select>
 
-	<select id="getBooking" resultMap="booking">
+	<select id="getBooking" resultMap="bookingResult">
 		SELECT *
 		FROM booking
 		WHERE user_id=#{userId}
