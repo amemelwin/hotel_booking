@@ -24,19 +24,17 @@
 </head>
 <body>
  	<!-- Modal -->
-	<div th:fragment="successRoomModel" class="modal fade" id="successRoomModel" tabindex="-1"
+	<div th:fragment="successBookingModel" class="modal fade" id="successBookingModel" tabindex="-1"
 		role="dialog" aria-labelledby="cancel room model"
 		aria-hidden="true" >
 		<div class="modal-dialog modal-dialog-centered" role="document" >
 			<div class="modal-content" style="border-radius: 20px">
 				<div class="modal-header">
-					<h5 class="modal-title d-flex flex-row items-center justify-content-center w-100" id="exampleModalLongTitle">部屋予約キャンセル</h5>
-					<i class="bi bi-x-lg h2" style="color:#CDCDCD"></i>
+					<h5 class="modal-title d-flex flex-row items-center justify-content-center w-100" id="exampleModalLongTitle">ありがとう!</h5>
+					<!-- id="cancelRoomModel" -->
+					<div class="btn btn-outline" id="successBookingModel-close"><i class="bi bi-x-lg h2" style="color:#CDCDCD"></i></div>
 				</div>
-				<div class="modal-body text-center">Room 6の予約をキャンセルします、よろしいでしょうか？</div>
-				<div class="modal-footer d-flex flex-row justify-content-center">
-					<button type="button" style="width: 150px;background: #0085FF;border-radius: 10px;" class="btn btn-primary">OK</button>
-				</div>
+				<div th:name="modal-body" class="modal-body text-center my-5"></div>
 			</div>
 		</div>
 	</div>

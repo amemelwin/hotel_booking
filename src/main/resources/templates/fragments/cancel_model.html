@@ -31,12 +31,15 @@
 			<div class="modal-content" style="border-radius: 20px">
 				<div class="modal-header">
 					<h5 class="modal-title d-flex flex-row items-center justify-content-center w-100" id="exampleModalLongTitle">部屋予約キャンセル</h5>
-					<i class="bi bi-x-lg h2" style="color:#CDCDCD"></i>
+					<!-- id="cancelRoomModel" -->
+					<div class="btn btn-outline" id="cancelRoomModel-close"><i class="bi bi-x-lg h2" style="color:#CDCDCD"></i></div>
 				</div>
 				<div class="modal-body text-center">の予約をキャンセルします、よろしいでしょうか？</div>
-				<div class="modal-footer d-flex flex-row justify-content-center">
-					<button type="button" style="width: 150px;background: #0085FF;border-radius: 10px;" class="btn btn-primary">OK</button>
-				</div>
+				<form th:action="@{/booking/cancel}" method="post" class="modal-footer d-flex flex-row justify-content-center">
+					<input type="hidden" name="id" value="">
+					<input type="hidden" name="bookingId" value="">
+					<button type="submit" style="width: 150px;background: #0085FF;border-radius: 10px;" class="btn btn-primary">OK</button>
+				</form>
 			</div>
 		</div>
 	</div>

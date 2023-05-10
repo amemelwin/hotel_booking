@@ -2,9 +2,9 @@ package com.hotel.booking.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.hotel.booking.entity.Room;
 import com.hotel.booking.entity.RoomBooking;
@@ -31,6 +31,10 @@ public class HotelBookingService {
 		this.hotelBookingMapper.updateRoom(roomId, lendFlag);
 	}
 
+	public void cancelBooking(int bookingId) {
+		this.hotelBookingMapper.cancelBooking(bookingId);
+	}
+	
 	public List<Room> getRoom() {
 		return this.hotelBookingMapper.getRoom();
 	}
@@ -48,7 +52,15 @@ public class HotelBookingService {
 		session.setAttribute("Auth", user);
 	}
 	
+<<<<<<< HEAD
 	public void createUser(User user) {
 		this.hotelBookingMapper.createUser(user);
+=======
+	// delivery agent for model alert
+	public void msgDeliveryAgent(Model model,HttpSession session) {
+		// screen/index.html => input 'order-success'
+		model.addAttribute("orderSuccess",session.getAttribute("orderSuccess"));
+		session.setAttribute("orderSuccess","");
+>>>>>>> c72d113ca9031d2a80ccc439b82641770b892e66
 	}
 }

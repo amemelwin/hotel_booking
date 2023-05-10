@@ -3,8 +3,7 @@
 <head th:replace="fragments/common :: head('Hotel Booking System')"></head>
 <body>
 	<!-- reciever -->
-	<input type="hidden" name="order-success" value="0">
-	
+	<input type="hidden" name="order-success" th:value="${orderSuccess}">
 	<!-- reciever -->
 	
 	<div th:replace="fragments/header.html :: header(Auth=${Auth})"></div>
@@ -15,7 +14,7 @@
 
 			<div th:if="${Auth}" class="col-3" th:each="room : ${rooms}"
 				th:object="${room}">
-				<div th:if="${Auth.id==room.bookUserId}" th:cancel-able="1"
+				<div th:if="${Auth.id==room.bookUserId}" th:cancel-able="1" th:book-id="*{bookingId}"
 					th:id="*{id}" th:flag="*{lendFlag}" th:choose="0"
 					class="text-center py-5 border room" th:text="*{roomNumber}"
 					style="border-radius: 15px; margin-bottom: 20px; user-select: none;"
@@ -39,7 +38,7 @@
 			</div>
 
 
-			<form th:action="@{/booking/create}" method="post">
+			<form name="create-booking" th:action="@{/booking/create}" method="post">
 				<input name="id" type="hidden" value="0">
 			</form>
 
@@ -49,11 +48,18 @@
 		</div>
 
 	</div>
+<<<<<<< HEAD
 	<!-- MOdels 	<div th:replace="fragments/cancel_model :: cancelRoomModel"></div>
 	 -->
+=======
+	<!-- MOdels -->
+	<div th:replace="fragments/cancel_model :: cancelRoomModel"></div>
+	<div th:replace="fragments/success_model :: successBookingModel"></div>
+>>>>>>> c72d113ca9031d2a80ccc439b82641770b892e66
 	<!-- MOdels -->
 	<script>
 		$(document).ready(function() {
+			// cancel MOdel
 			// model on close event
 			$('#cancelRoomModel').on("hidden.bs.modal", function () {
 				let modelContents = $('#cancelRoomModel > div > div').children();
@@ -65,7 +71,25 @@
 				})
 				modelBody.text('の予約をキャンセルします、よろしいでしょうか？');
 			});
+			$('#cancelRoomModel-close').click(()=>{
+				$('#cancelRoomModel').modal('hide');
+			})
 			// model on close event
+			
+			// cancel MOdel
+			
+			// success Model 
+			$('#successBookingModel-close').click(()=>{
+				$('#successBookingModel').modal('hide');
+			})
+			
+			// check msg from msgDeliveryAgent
+			let orderSuccess = $("input[name='order-success']");
+			if(orderSuccess.attr('value')){
+				$("#successBookingModel > div > div > div[name='modal-body']").text(orderSuccess.attr('value'));
+				$("#successBookingModel").modal('show');
+			}
+			// success Model
 			
 			// select
 			$('.room').click(function(e) {
@@ -73,6 +97,7 @@
 				let avaliable = $(this).attr('flag') == 0 ? true : false;
 				let isSelected = $(this).attr('choose') == 1 ? true : false;
 				let cancelAble = $(this).attr('cancel-able') == 1? true : false;
+				let bookingId = $(this).attr('book-id');
 				let roomNumber = $(this).text();
 				if (avaliable) {
 					if (isSelected) {
@@ -97,8 +122,14 @@
 						}
 					})
 					modelBody.text(roomNumber +' '+ modelBody.text());
-					cancelModel.modal('show');
 					// search and injection of Model's Body text
+					// inject id to form
+					let idInput = $('#cancelRoomModel > div > div > form > input[name="id"]');
+					let bookingIdInput = $('#cancelRoomModel > div > div > form > input[name="bookingId"]');					
+					idInput.attr('value',id);
+					bookingIdInput.attr('value',bookingId);
+					// inject id to form
+					cancelModel.modal('show');
 				}
 			});
 			// relse
@@ -120,7 +151,7 @@
 				let roomId = $('input[name="id"]').attr('value');
 				console.log(roomId);
 				if(roomId){
-					$("form").submit();
+					$("form[name='create-booking']").submit();
 				}else{
 					alert("Please Select Room First");
 				}

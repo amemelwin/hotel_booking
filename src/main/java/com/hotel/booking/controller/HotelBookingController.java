@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.hotel.booking.entity.Room;
+import com.hotel.booking.entity.RoomBooking;
 import com.hotel.booking.entity.User;
 import com.hotel.booking.service.HotelBookingService;
 
@@ -25,12 +26,12 @@ public class HotelBookingController {
 	
 	@GetMapping("/")
 	public String index(Model model,HttpSession session) {
+		this.hotelBookingService.msgDeliveryAgent(model, session);
 		model.addAttribute("rooms",this.hotelBookingService.getRoomBooking());
 		model.addAttribute("Auth",this.hotelBookingService.checkAuth(session));
 		return "screen/index";
 	}
 	
-
 	@GetMapping("/hotel/room/get")
 	public String getRooms() {
 		System.out.println(this.hotelBookingService.getRoom());
@@ -54,7 +55,7 @@ public class HotelBookingController {
 	
 	@PostMapping("/login") // testing purpose get it will be post after 
 	public String login(HttpSession session) {
-		this.hotelBookingService.login(this.hotelBookingService.getUser().get(1), session);
+		this.hotelBookingService.login(this.hotelBookingService.getUser().get(0), session);
 		return "redirect:/";
 	}
 	
@@ -90,6 +91,7 @@ public class HotelBookingController {
 		if( auth != null) {
 			this.hotelBookingService.createBooking( auth.getId(), room.getId());
 			this.hotelBookingService.updateRoom(room.getId(), 1);
+			session.setAttribute("orderSuccess","Room "+room.getId()+" を予約しました。");
 			return "redirect:/";
 		}else {
 			return "redirect:/login";
@@ -97,7 +99,18 @@ public class HotelBookingController {
 	}
 	
 
-	
+	@PostMapping("/booking/cancel")
+	public String cancelBooking(@ModelAttribute RoomBooking room,HttpSession session) {
+		User auth = this.hotelBookingService.checkAuth(session);
+		if( auth != null) {
+			System.out.println(room);
+			this.hotelBookingService.cancelBooking(room.getBookingId());
+			this.hotelBookingService.updateRoom(room.getId(), 0);
+			return "redirect:/";
+		}else {
+			return "redirect:/login";
+		}
+	}
 	
 //	@GetMapping("/testing")
 //	public String test(Model model, HttpSession session) {
