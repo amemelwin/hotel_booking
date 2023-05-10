@@ -39,7 +39,7 @@
 			</div>
 
 
-			<form th:action="@{/booking/create}" method="post">
+			<form name="create-booking" th:action="@{/booking/create}" method="post">
 				<input name="id" type="hidden" value="0">
 			</form>
 
@@ -127,7 +127,7 @@
 				let roomId = $('input[name="id"]').attr('value');
 				console.log(roomId);
 				if(roomId){
-					$("form").submit();
+					$("form[name='create-booking']").submit();
 				}else{
 					alert("Please Select Room First");
 				}
