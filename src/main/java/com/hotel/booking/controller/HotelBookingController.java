@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.hotel.booking.entity.Room;
+import com.hotel.booking.entity.User;
 import com.hotel.booking.service.HotelBookingService;
 
 import jakarta.servlet.http.HttpSession;
@@ -64,8 +65,10 @@ public class HotelBookingController {
 	
 	@PostMapping("/booking/create")
 	public String booking(@ModelAttribute Room room, HttpSession session) {
-		
-		if(this.hotelBookingService.checkAuth(session) != null) {
+		User auth = this.hotelBookingService.checkAuth(session);
+		if( auth != null) {
+			this.hotelBookingService.createBooking( auth.getId(), room.getId());
+			this.hotelBookingService.updateRoom(room.getId(), 1);
 			return "redirect:/";
 		}else {
 			return "redirect:/login";

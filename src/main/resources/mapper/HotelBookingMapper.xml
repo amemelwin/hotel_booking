@@ -32,6 +32,7 @@
 		<result column="updated_at" property="updatedAt" />
 	</resultMap>
 
+	<!-- Room Booking -->
 	<resultMap id="roomBooking" type="com.hotel.booking.entity.RoomBooking">
 		<id column="id" property="id" />
 		<result column="room_number" property="roomNumber" />
@@ -48,6 +49,20 @@
 		GROUP BY r.id,r.room_number,r.lend_flag
 		ORDER BY r.id;
 	</select>
+	
+	<!-- Create Booking -->
+	<insert id="createBooking">
+		INSERT INTO 
+		booking(date,room_id,user_id)
+		VALUES (now(),#{roomId},#{userId});
+	</insert>
+	<update id="updateRoom">
+		UPDATE rooms
+		SET lend_flag=#{lendFlag},
+			updated_at=now()
+		WHERE id=#{roomId}
+	</update>
+	
 	<select id="getUser" resultMap="user">
 		SELECT *
 		FROM users

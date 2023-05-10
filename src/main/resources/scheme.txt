@@ -31,6 +31,7 @@ Create Table booking (
 	user_id int,
 	created_at timestamp Default now(),
 	updated_at timestamp Default now(),
+	deleted_at timestamp Default null,
 	PRIMARY KEY(id)
 );
 
