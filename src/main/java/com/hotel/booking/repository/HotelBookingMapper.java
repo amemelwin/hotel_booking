@@ -36,4 +36,7 @@ public interface HotelBookingMapper {
 	// Create User
 	public void createUser(User user);
 	
+	// login
+	public User login(@Param("email") String email,@Param("password") String password);
+	
 }

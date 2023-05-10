@@ -33,6 +33,13 @@
 		<result column="deleted_at" property="deletedAt" />
 	</resultMap>
 
+	<!-- login -->
+	<select id="login" resultMap="user">
+		SELECT id,username,email
+		FROM users
+		WHERE email=#{email} AND password=#{password}
+	</select>
+
 	<!-- Room Booking -->
 	<resultMap id="roomBooking" type="com.hotel.booking.entity.RoomBooking">
 		<id column="id" property="id" />

@@ -1,5 +1,7 @@
 package com.hotel.booking.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.hotel.booking.entity.Room;
 import com.hotel.booking.entity.RoomBooking;
 import com.hotel.booking.entity.User;
+import com.hotel.booking.form.LoginForm;
 import com.hotel.booking.service.HotelBookingService;
 
 import jakarta.servlet.http.HttpSession;
@@ -52,7 +55,11 @@ public class HotelBookingController {
 
 	@GetMapping("/login") // testing purpose get it will be post after 
 	public String login(Model model,HttpSession session) {
-		if(this.hotelBookingService.checkAuth(session) == null) {			
+		if(this.hotelBookingService.checkAuth(session) == null) {
+			LoginForm newForm = new LoginForm();
+			newForm.setEmail("mr.arkar@gmail.com");
+			newForm.setPassword("123456");
+			model.addAttribute("loginForm",newForm);
 			return "screen/login";
 		}else {
 			return "redirect:/";
@@ -60,9 +67,22 @@ public class HotelBookingController {
 	}
 	
 	@PostMapping("/login") // testing purpose get it will be post after 
-	public String login(HttpSession session) {
-		this.hotelBookingService.login(this.hotelBookingService.getUser().get(0), session);
-		return "redirect:/";
+	public String login(@Valid @ModelAttribute LoginForm loginForm,BindingResult result,Model model, HttpSession session) {
+		if(result.hasErrors()) {
+			Map<String,String> errorMap = this.hotelBookingService.formErrorExtractor(result);
+			for(Map.Entry<String,String> error : errorMap.entrySet()) {
+				model.addAttribute(error.getKey()+"_error",error.getValue());
+			}
+			return "screen/login";
+		}
+		User authUser = this.hotelBookingService.login(loginForm.getEmail(), loginForm.getPassword());
+		if(authUser!=null) {
+			this.hotelBookingService.setAuth(authUser, session);
+			return "redirect:/";
+		}else {
+			model.addAttribute("login_error","username or password does not match!");
+			return "screen/login";
+		}		
 	}
 	
 	@GetMapping("/signup")
@@ -86,7 +106,7 @@ public class HotelBookingController {
 
 	@GetMapping("/logout") // testing purpose get it will be post after 
 	public String logout(Model model,HttpSession session) {
-		this.hotelBookingService.login(null, session);
+		this.hotelBookingService.setAuth(null, session);
 		return "redirect:/";
 	}
 

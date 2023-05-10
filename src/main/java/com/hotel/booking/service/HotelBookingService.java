@@ -1,10 +1,15 @@
 package com.hotel.booking.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 import com.hotel.booking.entity.Booking;
 import com.hotel.booking.entity.Room;
@@ -53,8 +58,11 @@ public class HotelBookingService {
 		return user;
 	}
 
-	public void login(User user, HttpSession session) {
+	public void setAuth(User user, HttpSession session) {
 		session.setAttribute("Auth", user);
+	}
+	public User login(String email, String password) {
+		return this.hotelBookingMapper.login(email, password);
 	}
 	
 
@@ -66,5 +74,14 @@ public class HotelBookingService {
 		// screen/index.html => input 'order-success'
 		model.addAttribute("orderSuccess",session.getAttribute("orderSuccess"));
 		session.setAttribute("orderSuccess","");
+	}
+	
+	// error
+	public Map<String,String> formErrorExtractor(BindingResult result) {
+		Map<String,String> errorMap =  new HashMap<String,String>();
+		for(FieldError field :result.getFieldErrors()) {
+			errorMap.put(field.getField(),field.getDefaultMessage());
+		}
+		return errorMap;	
 	}
 }
