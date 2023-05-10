@@ -57,6 +57,10 @@ public class HotelBookingService {
 		session.setAttribute("Auth", user);
 	}
 	
+
+	public void createUser(User user) {
+		this.hotelBookingMapper.createUser(user);
+	}
 	// delivery agent for model alert
 	public void msgDeliveryAgent(Model model,HttpSession session) {
 		// screen/index.html => input 'order-success'

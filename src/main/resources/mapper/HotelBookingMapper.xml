@@ -74,6 +74,14 @@
 		updated_at=now()
 		WHERE id=#{roomId}
 	</update>
+	
+	<!-- Create User -->
+	<insert id="createUser">
+		INSERT INTO
+		users(username,email,password)
+		VALUES(#{username},#{email},#{password});
+	</insert>
+	
 
 	<select id="getUser" resultMap="user">
 		SELECT *
