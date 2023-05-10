@@ -8,5 +8,5 @@ public class RoomBooking {
 	private String roomNumber;
 	private int lendFlag;
 	private int bookUserId;
-
+	private int bookingId;
 }

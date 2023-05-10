@@ -38,31 +38,34 @@
 		<result column="room_number" property="roomNumber" />
 		<result column="lend_flag" property="lendFlag" />
 		<result column="user_id" property="bookUserId" />
+		<result column="booking_id" property="bookingId" />
 	</resultMap>
 
 	<select id="getRoomBooking" resultMap="roomBooking">
-		SELECT r.id,r.room_number,r.lend_flag,(SELECT bb.user_id FROM booking bb
-		WHERE bb.id = MAX(b.id))
+		SELECT
+		r.id,r.room_number,r.lend_flag,
+		(SELECT bb.user_id FROM booking bb WHERE bb.id = MAX(b.id)),
+		(SELECT bb.id booking_id FROM booking bb WHERE bb.id = MAX(b.id))
 		FROM rooms r
 		LEFT OUTER JOIN booking b
 		ON r.id = b.room_id
 		GROUP BY r.id,r.room_number,r.lend_flag
 		ORDER BY r.id;
 	</select>
-	
+
 	<!-- Create Booking -->
 	<insert id="createBooking">
-		INSERT INTO 
+		INSERT INTO
 		booking(date,room_id,user_id)
 		VALUES (now(),#{roomId},#{userId});
 	</insert>
 	<update id="updateRoom">
 		UPDATE rooms
 		SET lend_flag=#{lendFlag},
-			updated_at=now()
+		updated_at=now()
 		WHERE id=#{roomId}
 	</update>
-	
+
 	<select id="getUser" resultMap="user">
 		SELECT *
 		FROM users

@@ -2,6 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/common :: head('Hotel Booking System')"></head>
 <body>
+	<!-- reciever -->
+	<input type="hidden" name="order-success" value="0">
+	
+	<!-- reciever -->
+	
 	<div th:replace="fragments/header.html :: header(Auth=${Auth})"></div>
 
 	<div class="mx-auto w-50">
@@ -44,32 +49,31 @@
 		</div>
 
 	</div>
-	<!-- Modal -->
-	<div class="modal fade show" id="cancelRoomModel" tabindex="-1"
-		role="dialog" aria-labelledby="cancel room model"
-		aria-hidden="true" >
-		<div class="modal-dialog modal-dialog-centered" role="document" >
-			<div class="modal-content" style="border-radius: 20px">
-				<div class="modal-header">
-					<h5 class="modal-title d-flex flex-row items-center justify-content-center w-100" id="exampleModalLongTitle">部屋予約キャンセル</h5>
-					<i class="bi bi-x-lg h2" style="color:#CDCDCD"></i>
-				</div>
-				<div class="modal-body text-center">Room 6の予約をキャンセルします、よろしいでしょうか？</div>
-				<div class="modal-footer d-flex flex-row justify-content-center">
-					<button type="button" style="width: 150px;background: #0085FF;border-radius: 10px;" class="btn btn-primary">OK</button>
-				</div>
-			</div>
-		</div>
-	</div>
+	<!-- MOdels -->
+	<div th:replace="fragments/cancel_model :: cancelRoomModel"></div>
+	<!-- MOdels -->
 	<script>
 		$(document).ready(function() {
-			$('#cancelRoomModel').modal('show')
+			// model on close event
+			$('#cancelRoomModel').on("hidden.bs.modal", function () {
+				let modelContents = $('#cancelRoomModel > div > div').children();
+				let modelBody;
+				modelContents.each((index,element)=>{
+					if(($(element).attr('class')).includes('modal-body')){
+						modelBody = $(element);
+					}
+				})
+				modelBody.text('の予約をキャンセルします、よろしいでしょうか？');
+			});
+			// model on close event
+			
 			// select
 			$('.room').click(function(e) {
 				let id = this.id;
 				let avaliable = $(this).attr('flag') == 0 ? true : false;
 				let isSelected = $(this).attr('choose') == 1 ? true : false;
 				let cancelAble = $(this).attr('cancel-able') == 1? true : false;
+				let roomNumber = $(this).text();
 				if (avaliable) {
 					if (isSelected) {
 						$(this).css('background-color', 'white');
@@ -83,7 +87,18 @@
 					}
 				}else if(cancelAble){
 					// here cancel booking
-					// alert("hello world");
+					let cancelModel = $('#cancelRoomModel');
+					// search and injection of Model's Body text
+					let modelContents = $('#cancelRoomModel > div > div').children();
+					let modelBody;
+					modelContents.each((index,element)=>{
+						if(($(element).attr('class')).includes('modal-body')){
+							modelBody = $(element);
+						}
+					})
+					modelBody.text(roomNumber +' '+ modelBody.text());
+					cancelModel.modal('show');
+					// search and injection of Model's Body text
 				}
 			});
 			// relse
