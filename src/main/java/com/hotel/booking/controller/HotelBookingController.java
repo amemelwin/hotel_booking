@@ -3,7 +3,6 @@ package com.hotel.booking.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,13 +29,7 @@ public class HotelBookingController {
 		model.addAttribute("rooms",this.hotelBookingService.getRoomBooking());
 		model.addAttribute("Auth",this.hotelBookingService.checkAuth(session));
 		return "screen/index";
-	}
-	
-//	@GetMapping("/hotel/room/get")
-//	public String getRooms() {
-//		System.out.println(this.hotelBookingService.getRoom());
-//		return "screen/index";
-//	}
+	}	
 	
 	@GetMapping("/booking/history")
 	public String history(Model model,HttpSession session) {
