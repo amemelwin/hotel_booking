@@ -82,14 +82,18 @@
 		WHERE id=#{roomId}
 	</update>
 	
+	<!-- Check Email Duplicate-->
+	<select id="checkEmail" resultMap="user">
+		SELECT * FROM users WHERE email=#{email}
+	</select>
+	
 	<!-- Create User -->
 	<insert id="createUser">
 		INSERT INTO
 		users(username,email,password)
-		VALUES(#{username},#{email},#{password});
+		VALUES(#{username},#{email},#{password})
 	</insert>
 	
-
 	<select id="getUser" resultMap="user">
 		SELECT *
 		FROM users

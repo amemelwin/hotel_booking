@@ -148,7 +148,7 @@
 			$("#cretae-booking").click((e)=>{
 				let roomId = $('input[name="id"]').attr('value');
 				console.log(roomId);
-				if(roomId){
+				if(roomId>0){
 					$("form[name='create-booking']").submit();
 				}else{
 					alert("Please Select Room First");

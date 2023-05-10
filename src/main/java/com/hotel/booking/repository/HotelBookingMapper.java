@@ -9,6 +9,7 @@ import com.hotel.booking.entity.Booking;
 import com.hotel.booking.entity.Room;
 import com.hotel.booking.entity.RoomBooking;
 import com.hotel.booking.entity.User;
+import com.hotel.booking.form.SignUpForm;
 
 @Mapper
 public interface HotelBookingMapper {
@@ -34,7 +35,10 @@ public interface HotelBookingMapper {
 	public List<Booking> getBooking(@Param("userId") int userId);
 	
 	// Create User
-	public void createUser(User user);
+	public void createUser(SignUpForm signUpForm);
+	
+	// Check Email Exist
+	public User checkEmail(@Param("email") String email);
 	
 	// login
 	public User login(@Param("email") String email,@Param("password") String password);

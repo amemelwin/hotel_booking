@@ -14,6 +14,7 @@ import com.hotel.booking.entity.Room;
 import com.hotel.booking.entity.RoomBooking;
 import com.hotel.booking.entity.User;
 import com.hotel.booking.form.LoginForm;
+import com.hotel.booking.form.SignUpForm;
 import com.hotel.booking.service.HotelBookingService;
 
 import jakarta.servlet.http.HttpSession;
@@ -32,7 +33,7 @@ public class HotelBookingController {
 		model.addAttribute("rooms",this.hotelBookingService.getRoomBooking());
 		model.addAttribute("Auth",this.hotelBookingService.checkAuth(session));
 		return "screen/index";
-	}	
+	}
 	
 	@GetMapping("/booking/history")
 	public String history(Model model,HttpSession session) {
@@ -41,7 +42,6 @@ public class HotelBookingController {
 			return "redirect:/login";
 		}else {
 			model.addAttribute("Auth",auth);
-			System.out.println(this.hotelBookingService.getBooking(auth.getId()));
 			model.addAttribute("bookingHistorys",this.hotelBookingService.getBooking(auth.getId()));
 			return "screen/history";
 		}
@@ -57,10 +57,10 @@ public class HotelBookingController {
 	public String login(Model model,HttpSession session) {
 		if(this.hotelBookingService.checkAuth(session) == null) {
 			LoginForm newForm = new LoginForm();
-			newForm.setEmail("mr.arkar@gmail.com");
-			newForm.setPassword("123456");
+			newForm.setEmail((String) session.getAttribute("email"));
+			session.removeAttribute("email");
 			model.addAttribute("loginForm",newForm);
-			return "screen/login";
+			return "screen/login"; 
 		}else {
 			return "redirect:/";
 		}
@@ -70,6 +70,7 @@ public class HotelBookingController {
 	public String login(@Valid @ModelAttribute LoginForm loginForm,BindingResult result,Model model, HttpSession session) {
 		if(result.hasErrors()) {
 			Map<String,String> errorMap = this.hotelBookingService.formErrorExtractor(result);
+			
 			for(Map.Entry<String,String> error : errorMap.entrySet()) {
 				model.addAttribute(error.getKey()+"_error",error.getValue());
 			}
@@ -87,21 +88,31 @@ public class HotelBookingController {
 	
 	@GetMapping("/signup")
 	public String signup(Model model) {
-		User user = new User();
-		model.addAttribute("user",user);
+		SignUpForm signUpForm = new SignUpForm();
+		model.addAttribute("signUpForm",signUpForm);
 		return "screen/signup";
 	}
 	
 	@PostMapping("/signup")
-	public String signup(@Valid @ModelAttribute("user") User user,BindingResult result) {		
-		System.out.println(user);
+	public String signup(@Valid @ModelAttribute("signUpForm") SignUpForm signUpForm,BindingResult result,Model model,HttpSession session) {	
+		// form field check null
 		if(result.hasErrors()) {
 			return "screen/signup";
-		}else {
-			this.hotelBookingService.createUser(user);
-			return "redirect:/login";			
 		}
-//		this.hotelBookingService.createUser(user);
+		// check password and confirm password
+		if(!signUpForm.getConfirmPassword().equals(signUpForm.getPassword())) {
+			model.addAttribute("confirm_error","The password and confirmation password do not match.");
+			return "screen/signup";
+		}
+		// check email duplicate 
+		if( this.hotelBookingService.checkEmail(signUpForm.getEmail()) != null) {
+			model.addAttribute("email_error","Your email is already exist!");
+			return "screen/signup";
+		}
+		
+		this.hotelBookingService.createUser(signUpForm);
+		session.setAttribute("email", signUpForm.getEmail());
+		return "redirect:/login";
 	}
 
 	@GetMapping("/logout") // testing purpose get it will be post after 

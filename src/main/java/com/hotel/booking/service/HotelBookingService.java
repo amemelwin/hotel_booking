@@ -15,6 +15,7 @@ import com.hotel.booking.entity.Booking;
 import com.hotel.booking.entity.Room;
 import com.hotel.booking.entity.RoomBooking;
 import com.hotel.booking.entity.User;
+import com.hotel.booking.form.SignUpForm;
 import com.hotel.booking.repository.HotelBookingMapper;
 
 import jakarta.servlet.http.HttpSession;
@@ -49,6 +50,10 @@ public class HotelBookingService {
 		return this.hotelBookingMapper.getUser();
 	}
 	
+	public User checkEmail(String email) {
+		return this.hotelBookingMapper.checkEmail(email);
+	}
+	
 	public List<Booking> getBooking(int userId){
 		return this.hotelBookingMapper.getBooking(userId);
 	}
@@ -66,22 +71,22 @@ public class HotelBookingService {
 	}
 	
 
-	public void createUser(User user) {
-		this.hotelBookingMapper.createUser(user);
+	public void createUser(SignUpForm signUpForm) {
+		this.hotelBookingMapper.createUser(signUpForm);
 	}
 	// delivery agent for model alert
 	public void msgDeliveryAgent(Model model,HttpSession session) {
 		// screen/index.html => input 'order-success'
 		model.addAttribute("orderSuccess",session.getAttribute("orderSuccess"));
-		session.setAttribute("orderSuccess","");
+		session.removeAttribute("orderSuccess");
 	}
 	
 	// error
 	public Map<String,String> formErrorExtractor(BindingResult result) {
-		Map<String,String> errorMap =  new HashMap<String,String>();
-		for(FieldError field :result.getFieldErrors()) {
+		Map<String,String> errorMap =  new HashMap<String,String>(); 
+ 		for(FieldError field :result.getFieldErrors()) {
 			errorMap.put(field.getField(),field.getDefaultMessage());
 		}
-		return errorMap;	
+		return errorMap;
 	}
 }
