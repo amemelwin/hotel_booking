@@ -3,6 +3,8 @@ package com.hotel.booking.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +14,7 @@ import com.hotel.booking.entity.User;
 import com.hotel.booking.service.HotelBookingService;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 public class HotelBookingController {
@@ -55,6 +58,24 @@ public class HotelBookingController {
 		return "redirect:/";
 	}
 	
+	@GetMapping("/signup")
+	public String signup(Model model) {
+		User user = new User();
+		model.addAttribute("user",user);
+		return "screen/signup";
+	}
+	
+	@PostMapping("/signup")
+	public String signup(@Valid @ModelAttribute("user") User user,BindingResult result) {		
+		System.out.println(user);
+		if(result.hasErrors()) {
+			return "screen/signup";
+		}else {
+			this.hotelBookingService.createUser(user);
+			return "redirect:/login";			
+		}
+//		this.hotelBookingService.createUser(user);
+	}
 
 	@GetMapping("/logout") // testing purpose get it will be post after 
 	public String logout(Model model,HttpSession session) {
@@ -75,6 +96,7 @@ public class HotelBookingController {
 		}
 	}
 	
+
 	
 	
 //	@GetMapping("/testing")

@@ -47,4 +47,8 @@ public class HotelBookingService {
 	public void login(User user, HttpSession session) {
 		session.setAttribute("Auth", user);
 	}
+	
+	public void createUser(User user) {
+		this.hotelBookingMapper.createUser(user);
+	}
 }

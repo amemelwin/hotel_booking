@@ -30,4 +30,7 @@ public interface HotelBookingMapper {
 	// Get booking
 	public List<Booking> getBooking();
 	
+	// Create User
+	public void createUser(User user);
+	
 }
