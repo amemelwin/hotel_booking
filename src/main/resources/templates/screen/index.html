@@ -9,7 +9,10 @@
 	<div th:replace="fragments/header.html :: header(Auth=${Auth})"></div>
 
 	<div class="mx-auto w-50">
-		<div class="mb-3">部屋一覧</div>
+		<div class="d-flex flex-row justify-content-between items-center mb-3">
+			<div class="my-auto">部屋一覧</div>
+			<a th:if="${Auth}" th:href="@{/booking/history}" class="btn btn-info text-blue" style="text-decoration: none;">予約履歴</a>
+		</div>
 		<div class="row d-flex flex-row justify-content-between parent">
 
 			<div th:if="${Auth}" class="col-3" th:each="room : ${rooms}"

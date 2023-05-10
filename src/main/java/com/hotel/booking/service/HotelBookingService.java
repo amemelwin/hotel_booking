@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.hotel.booking.entity.Booking;
 import com.hotel.booking.entity.Room;
 import com.hotel.booking.entity.RoomBooking;
 import com.hotel.booking.entity.User;
@@ -41,6 +42,10 @@ public class HotelBookingService {
 
 	public List<User> getUser() {
 		return this.hotelBookingMapper.getUser();
+	}
+	
+	public List<Booking> getBooking(int userId){
+		return this.hotelBookingMapper.getBooking(userId);
 	}
 
 	public User checkAuth(HttpSession session) {

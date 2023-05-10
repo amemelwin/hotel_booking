@@ -31,6 +31,6 @@ public interface HotelBookingMapper {
 	public List<Room> getRoom();
 	
 	// Get booking
-	public List<Booking> getBooking();
+	public List<Booking> getBooking(@Param("userId") int userId);
 	
 }

@@ -30,6 +30,7 @@
 		<result column="user_id" property="userId" />
 		<result column="created_at" property="createdAt" />
 		<result column="updated_at" property="updatedAt" />
+		<result column="deleted_at" property="deletedAt" />
 	</resultMap>
 
 	<!-- Room Booking -->
@@ -87,6 +88,7 @@
 	<select id="getBooking" resultMap="booking">
 		SELECT *
 		FROM booking
+		WHERE user_id=#{userId}
 	</select>
 
 </mapper>

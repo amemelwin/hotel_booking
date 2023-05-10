@@ -29,10 +29,23 @@ public class HotelBookingController {
 		return "screen/index";
 	}
 	
-	@GetMapping("/hotel/room/get")
-	public String getRooms() {
-		System.out.println(this.hotelBookingService.getRoom());
-		return "screen/index";
+//	@GetMapping("/hotel/room/get")
+//	public String getRooms() {
+//		System.out.println(this.hotelBookingService.getRoom());
+//		return "screen/index";
+//	}
+	
+	@GetMapping("/booking/history")
+	public String history(Model model,HttpSession session) {
+		User auth = this.hotelBookingService.checkAuth(session);
+		if(auth == null) {			
+			return "redirect:/login";
+		}else {
+			model.addAttribute("Auth",auth);
+			System.out.println(this.hotelBookingService.getBooking(auth.getId()));
+			model.addAttribute("bookingHistorys",this.hotelBookingService.getBooking(auth.getId()));
+			return "screen/history";
+		}
 	}
 	
 	@GetMapping("/hotel/booking/get")
@@ -90,9 +103,4 @@ public class HotelBookingController {
 		}
 	}
 	
-//	@GetMapping("/testing")
-//	public String test(Model model, HttpSession session) {
-//		model.addAttribute("Auth",session.getAttribute("Auth"));
-//		return "screen/text";
-//	}
 }

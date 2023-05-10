@@ -12,4 +12,5 @@ public class Booking {
 	private Date date;
 	private Date createdAt;
 	private Date updatedAt;
+	private Date deletedAt;
 }
