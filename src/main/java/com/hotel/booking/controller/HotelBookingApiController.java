@@ -102,11 +102,11 @@ public class HotelBookingApiController {
 			BindingResult result) {
 		if (result.hasErrors()) {
 			return new ErrorResponse(this.commonHelper.formErrorExtractor1(result)).response();
-		} 
+		} else {
 			this.hotelBookingService.createUser(signUpForm);
 			User newUser = this.hotelBookingApiService.LatestUser();
 			return new ResponseEntity<>(newUser, HttpStatus.CREATED);
-		
+		}
 
 	}
 

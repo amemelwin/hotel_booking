@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.hotel.booking.entity.Booking;
 import com.hotel.booking.entity.Room;
 import com.hotel.booking.entity.User;
-import com.hotel.booking.form.SignUpForm;
 import com.hotel.booking.repository.HotelBookingMapper;
 
 @Service
