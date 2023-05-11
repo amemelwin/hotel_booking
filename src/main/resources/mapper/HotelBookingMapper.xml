@@ -100,20 +100,19 @@
 		VALUES(#{username},#{email},#{password})
 	</insert>
 	
-	<select id="getUser" resultMap="userResult">
+	<select id="getUsers" resultMap="userResult">
 		SELECT *
 		FROM users
 	</select>
 
-	<select id="getRoom" resultMap="roomResult">
+	<select id="getRooms" resultMap="roomResult">
 		SELECT *
 		FROM rooms
 	</select>
 
-	<select id="getBooking" resultMap="bookingResult">
+	<select id="getBookings" resultMap="bookingResult">
 		SELECT *
 		FROM booking
-		WHERE user_id=#{userId}
 	</select>
 
 </mapper>

@@ -40,5 +40,12 @@ public interface HotelBookingMapper {
 
 	// login
 	public User login(@Param("email") String email, @Param("password") String password);
+	
+	//Api
+	public List<User> getUsers();
+	
+	public List<Room> getRooms();
+	
+	public List<Booking> getBookings();
 
 }

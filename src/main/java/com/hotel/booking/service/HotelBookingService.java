@@ -53,4 +53,18 @@ public class HotelBookingService {
 	public void createUser(SignUpForm signUpForm) {
 		this.hotelBookingMapper.createUser(signUpForm);
 	}
+	
+	//API
+	
+	public List<User> getUsers(){
+		return this.hotelBookingMapper.getUsers();
+	}
+	
+	public List<Room> getRooms(){
+		return this.hotelBookingMapper.getRooms();
+	}
+	
+	public List<Booking> getBookings(){
+		return this.hotelBookingMapper.getBookings();
+	}
 }
