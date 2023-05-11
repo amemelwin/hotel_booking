@@ -136,7 +136,6 @@ public class HotelBookingController {
 		} else {
 			return "redirect:/login";
 		}
-//		return "redirect:/login";
 	}
 
 	@PostMapping("/booking/cancel")
