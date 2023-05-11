@@ -1,12 +1,15 @@
 package com.hotel.booking.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 
 import com.hotel.booking.entity.User;
 
@@ -21,6 +24,13 @@ public class CommonHelper {
 			errorMap.put(field.getField(), field.getDefaultMessage());
 		}
 		return errorMap;
+	}
+	public String formErrorExtractor1(BindingResult result) {
+		List<String> errorMsgs = new ArrayList<>();
+		for(ObjectError error:result.getAllErrors()) {
+			errorMsgs.add(error.getDefaultMessage());		
+		}
+		return errorMsgs.toString();	
 	}
 
 	public User checkAuth(HttpSession session) {
@@ -40,4 +50,6 @@ public class CommonHelper {
 		session.removeAttribute("orderSuccess");
 		session.removeAttribute("errorMessage");
 	}
+	
+	
 }

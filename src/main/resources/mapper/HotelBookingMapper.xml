@@ -12,6 +12,17 @@
 		<result column="created_at" property="createdAt" />
 		<result column="updated_at" property="updatedAt" />
 	</resultMap>
+	
+	<!-- User -->
+	<resultMap type="com.hotel.booking.form.SignUpForm" id="signUpResult">
+		<id column="id" property="id" />
+		<result column="username" property="username" />
+		<result column="email" property="email" />
+		<result column="password" property="password" />
+		<result column="confirmPassword" property="confirmPassword" />
+		<result column="created_at" property="createdAt" />
+		<result column="updated_at" property="updatedAt" />
+	</resultMap>
 
 	<!-- Room -->
 	<resultMap type="com.hotel.booking.entity.Room" id="roomResult">
@@ -111,12 +122,12 @@
 		users(username,email,password)
 		VALUES(#{username},#{email},#{password})
 	</insert>
-	
+
 	<select id="getUsers" resultMap="userResult">
 		SELECT *
 		FROM users
 	</select>
-	
+
 	<select id="getUserById" resultMap="userResult">
 		SELECT *
 		FROM users
@@ -127,7 +138,7 @@
 		SELECT *
 		FROM rooms
 	</select>
-	
+
 	<select id="getRoomById" resultMap="roomResult">
 		SELECT *
 		FROM rooms
@@ -138,11 +149,17 @@
 		SELECT *
 		FROM booking
 	</select>
-	
+
 	<select id="getBookingById" resultMap="bookingResult">
 		SELECT *
 		FROM booking
 		WHERE id = #{id}
 	</select>
+
+	<select id="latestUser" resultMap="userResult">
+		SELECT * FROM users
+		WHERE id= (SELECT MAX(id) FROM users)
+	</select>
+
 
 </mapper>

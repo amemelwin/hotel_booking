@@ -57,6 +57,8 @@ public interface HotelBookingMapper {
 	
 	public Booking getBookingById(int id);
 	
+	public User latestUser();
+	
 	
 
 }
