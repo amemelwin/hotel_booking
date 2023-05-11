@@ -122,7 +122,6 @@ public class HotelBookingController {
 	@PostMapping("/booking/create")
 	public String booking(@ModelAttribute Room room, HttpSession session) {
 		User auth = this.commonHelper.checkAuth(session);
-		System.out.println(room.getId());
 		if (auth != null) {
 			// Check In Room
 			if(this.hotelBookingService.checkInRoom(room.getId())!=null) {
@@ -130,7 +129,7 @@ public class HotelBookingController {
 				this.hotelBookingService.updateRoom(room.getId(), 1);
 				session.setAttribute("orderSuccess", "Room " + room.getId() + " を予約しました。");
 			}else {
-				session.setAttribute("orderSuccess", "申し訳ございません。予約をできませんでした！");
+				session.setAttribute("errorMessage", "申し訳ございません。予約をできませんでした！");
 			}
 			return "redirect:/";
 		} else {
@@ -142,8 +141,14 @@ public class HotelBookingController {
 	public String cancelBooking(@ModelAttribute RoomBooking room, HttpSession session) {
 		User auth = this.commonHelper.checkAuth(session);
 		if (auth != null) {
-			this.hotelBookingService.cancelBooking(room.getBookingId());
-			this.hotelBookingService.updateRoom(room.getId(), 0);
+			// Check Out Room
+			int validRoomCount = this.hotelBookingService.checkOutRoom(room.getBookingId(), room.getId(), auth.getId());
+			if(validRoomCount == 1) {				
+				this.hotelBookingService.cancelBooking(room.getBookingId());
+				this.hotelBookingService.updateRoom(room.getId(), 0);
+			}else {
+				session.setAttribute("errorMessage", "申し訳ございません。予約をできませんでした！");
+			}
 			return "redirect:/";
 		} else {
 			return "redirect:/login";
