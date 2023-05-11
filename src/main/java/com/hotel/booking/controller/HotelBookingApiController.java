@@ -98,8 +98,7 @@ public class HotelBookingApiController {
 	}
 
 	@PostMapping("/signup")
-	public ResponseEntity signUp(@Valid @ModelAttribute SignUpForm signUpForm, HttpSession session,
-			BindingResult result) {
+	public ResponseEntity signUp(@Valid @ModelAttribute SignUpForm signUpForm, BindingResult result, HttpSession session) {
 		if (result.hasErrors()) {
 			return new ErrorResponse(this.commonHelper.formErrorExtractor1(result)).response();
 		} else {
@@ -107,7 +106,6 @@ public class HotelBookingApiController {
 			User newUser = this.hotelBookingApiService.LatestUser();
 			return new ResponseEntity<>(newUser, HttpStatus.CREATED);
 		}
-
 	}
 
 	@PostMapping("/bookings/create")
@@ -127,11 +125,4 @@ public class HotelBookingApiController {
 			return new ErrorResponse("Your User Id  not found").response();
 		}
 	}
-//	@PostMapping("/bookings/create/{id}")
-//	public Booking createBooking(@ModelAttribute Booking booking,@PathVariable(value = "id") int bookingId) {
-//		System.out.println(booking);
-//		return booking;	
-//		
-//	}
-
 }

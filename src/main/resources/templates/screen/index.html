@@ -163,7 +163,6 @@
 			// th:action="@{/booking/create}"
 			$("#cretae-booking").click((e)=>{
 				let roomId = $('input[name="id"]').attr('value');
-				console.log(roomId);
 				if(roomId>0){
 					$("form[name='create-booking']").submit();
 				}else{
