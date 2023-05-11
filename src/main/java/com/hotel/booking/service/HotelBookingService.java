@@ -2,10 +2,12 @@ package com.hotel.booking.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hotel.booking.entity.Booking;
+import com.hotel.booking.entity.Room;
 import com.hotel.booking.entity.RoomBooking;
 import com.hotel.booking.entity.User;
 import com.hotel.booking.form.SignUpForm;
@@ -35,6 +37,10 @@ public class HotelBookingService {
 
 	public User checkEmail(String email) {
 		return this.hotelBookingMapper.checkEmail(email);
+	}
+	
+	public Room checkInRoom(int roomId) {
+		return this.hotelBookingMapper.checkInRoom(roomId);
 	}
 
 	public List<Booking> getBooking(int userId) {

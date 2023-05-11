@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.hotel.booking.entity.Booking;
+import com.hotel.booking.entity.Room;
 import com.hotel.booking.entity.RoomBooking;
 import com.hotel.booking.entity.User;
 import com.hotel.booking.form.SignUpForm;
@@ -27,6 +28,9 @@ public interface HotelBookingMapper {
 
 	// Get booking
 	public List<Booking> getBooking(@Param("userId") int userId);
+	
+	// checkInRoom
+	public Room checkInRoom(@Param("roomId") int roomId);
 
 	// Create User
 	public void createUser(SignUpForm signUpForm);

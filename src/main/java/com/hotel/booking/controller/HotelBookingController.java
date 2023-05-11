@@ -122,14 +122,21 @@ public class HotelBookingController {
 	@PostMapping("/booking/create")
 	public String booking(@ModelAttribute Room room, HttpSession session) {
 		User auth = this.commonHelper.checkAuth(session);
+		System.out.println(room.getId());
 		if (auth != null) {
-			this.hotelBookingService.createBooking(auth.getId(), room.getId());
-			this.hotelBookingService.updateRoom(room.getId(), 1);
-			session.setAttribute("orderSuccess", "Room " + room.getId() + " を予約しました。");
+			// Check In Room
+			if(this.hotelBookingService.checkInRoom(room.getId())!=null) {
+				this.hotelBookingService.createBooking(auth.getId(), room.getId());
+				this.hotelBookingService.updateRoom(room.getId(), 1);
+				session.setAttribute("orderSuccess", "Room " + room.getId() + " を予約しました。");
+			}else {
+				session.setAttribute("orderSuccess", "申し訳ございません。予約をできませんでした！");
+			}
 			return "redirect:/";
 		} else {
 			return "redirect:/login";
 		}
+//		return "redirect:/login";
 	}
 
 	@PostMapping("/booking/cancel")

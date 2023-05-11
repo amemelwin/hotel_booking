@@ -87,6 +87,12 @@
 		SELECT * FROM users WHERE email=#{email}
 	</select>
 	
+	<!-- Check Room Consistency -->
+	<select id="checkInRoom" resultMap="roomResult">
+		SELECT * FROM rooms 
+		WHERE id=#{roomId} AND lend_flag=0
+	</select>
+	
 	<!-- Create User -->
 	<insert id="createUser">
 		INSERT INTO
