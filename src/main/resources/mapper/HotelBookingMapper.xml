@@ -127,10 +127,22 @@
 		SELECT *
 		FROM rooms
 	</select>
+	
+	<select id="getRoomById" resultMap="roomResult">
+		SELECT *
+		FROM rooms
+		WHERE id = #{id}
+	</select>
 
 	<select id="getBookings" resultMap="bookingResult">
 		SELECT *
 		FROM booking
+	</select>
+	
+	<select id="getBookingById" resultMap="bookingResult">
+		SELECT *
+		FROM booking
+		WHERE id = #{id}
 	</select>
 
 </mapper>

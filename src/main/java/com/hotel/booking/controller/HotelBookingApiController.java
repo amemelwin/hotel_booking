@@ -17,49 +17,69 @@ import com.hotel.booking.entity.User;
 import com.hotel.booking.service.HotelBookingService;
 
 @RestController
-@RequestMapping(path= "${apiPrefix}")
+@RequestMapping(path = "${apiPrefix}")
 @SuppressWarnings("rawtypes")
 
 public class HotelBookingApiController {
 
 	@Autowired
 	HotelBookingService hotelBookingService;
-	
-	@GetMapping("/hotel/users")
+
+	@GetMapping("/users")
 	public ResponseEntity getUsers() {
 		List<User> usersList = this.hotelBookingService.getUsers();
-		if(usersList.size()>0) {
-			return new ResponseEntity<>(usersList,HttpStatus.OK);
+		if (usersList.size() > 0) {
+			return new ResponseEntity<>(usersList, HttpStatus.OK);
 		}
-		return new ErrorResponse("user not found").response();		 
+		return new ErrorResponse("user not found").response();
 	}
-	
-	 @GetMapping("/hotel/users/{id}")
-	    public ResponseEntity getUsersById(@PathVariable(value = "id") int userId)  {
-	        User user = this.hotelBookingService.getUserById(userId);
-	    	if (user != null) {
-				return new ResponseEntity<>(user, HttpStatus.OK);
-			} else {
-				return new ErrorResponse("Your User Id "+userId+" not found").response();
-			}
-		}        	
-	@GetMapping("/hotel/rooms")
+
+	@GetMapping("/users/{id}")
+	public ResponseEntity getUserById(@PathVariable(value = "id") int userId) {
+		User user = this.hotelBookingService.getUserById(userId);
+		if (user != null) {
+			return new ResponseEntity<>(user, HttpStatus.OK);
+		} else {
+			return new ErrorResponse("Your User Id " + userId + " not found").response();
+		}
+	}
+
+	@GetMapping("/rooms")
 	public ResponseEntity getRooms() {
 		List<Room> roomsList = this.hotelBookingService.getRooms();
-		if(roomsList.size()>0) {
-			return new ResponseEntity<>(roomsList,HttpStatus.OK);
+		if (roomsList.size() > 0) {
+			return new ResponseEntity<>(roomsList, HttpStatus.OK);
 		}
-		return new ErrorResponse("room not found").response();	
+		return new ErrorResponse("room not found").response();
 	}
-	
-	@GetMapping("/hotel/bookings")
+
+	@GetMapping("/rooms/{id}")
+	public ResponseEntity getRoomById(@PathVariable(value = "id") int roomId) {
+		Room room = this.hotelBookingService.getRoomById(roomId);
+		if (room != null) {
+			return new ResponseEntity<>(room, HttpStatus.OK);
+		} else {
+			return new ErrorResponse("Your Room Id " + roomId + " not found").response();
+		}
+	}
+
+	@GetMapping("/bookings")
 	public ResponseEntity getBookings() {
 		List<Booking> bookingsList = this.hotelBookingService.getBookings();
-		if(bookingsList.size()>0) {
-			return new ResponseEntity<>(bookingsList,HttpStatus.OK);
+		if (bookingsList.size() > 0) {
+			return new ResponseEntity<>(bookingsList, HttpStatus.OK);
 		}
-		return new ErrorResponse("booking not found").response();	
+		return new ErrorResponse("booking not found").response();
 	}
-	
-	
+
+	@GetMapping("/bookings/{id}")
+	public ResponseEntity getBookingById(@PathVariable(value = "id") int bookingId) {
+		Booking booking = this.hotelBookingService.getBookingById(bookingId);
+		if (booking != null) {
+			return new ResponseEntity<>(booking, HttpStatus.OK);
+		} else {
+			return new ErrorResponse("Your Booking Id " + bookingId + " not found").response();
+		}
+	}
+
 }

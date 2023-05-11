@@ -51,6 +51,12 @@ public interface HotelBookingMapper {
 	
 	public List<Room> getRooms();
 	
+	public Room getRoomById(int id);	
+	
 	public List<Booking> getBookings();
+	
+	public Booking getBookingById(int id);
+	
+	
 
 }
