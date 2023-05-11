@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,6 +34,15 @@ public class HotelBookingApiController {
 		return new ErrorResponse("user not found").response();		 
 	}
 	
+	 @GetMapping("/hotel/users/{id}")
+	    public ResponseEntity getUsersById(@PathVariable(value = "id") int userId)  {
+	        User user = this.hotelBookingService.getUserById(userId);
+	    	if (user != null) {
+				return new ResponseEntity<>(user, HttpStatus.OK);
+			} else {
+				return new ErrorResponse("Your User Id "+userId+" not found").response();
+			}
+		}        	
 	@GetMapping("/hotel/rooms")
 	public ResponseEntity getRooms() {
 		List<Room> roomsList = this.hotelBookingService.getRooms();

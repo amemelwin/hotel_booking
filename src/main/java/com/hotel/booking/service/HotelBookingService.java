@@ -64,6 +64,10 @@ public class HotelBookingService {
 		return this.hotelBookingMapper.getUsers();
 	}
 	
+	public User getUserById(int id) {
+		return this.hotelBookingMapper.getUserById(id);
+	}
+	
 	public List<Room> getRooms(){
 		return this.hotelBookingMapper.getRooms();
 	}

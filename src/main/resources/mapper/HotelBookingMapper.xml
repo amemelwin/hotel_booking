@@ -111,15 +111,16 @@
 		users(username,email,password)
 		VALUES(#{username},#{email},#{password})
 	</insert>
-<<<<<<< HEAD
 	
 	<select id="getUsers" resultMap="userResult">
-=======
-
-	<select id="getUser" resultMap="userResult">
->>>>>>> e11c6768ffd23503d6547fce411791070b400a7d
 		SELECT *
 		FROM users
+	</select>
+	
+	<select id="getUserById" resultMap="userResult">
+		SELECT *
+		FROM users
+		WHERE id = #{id}
 	</select>
 
 	<select id="getRooms" resultMap="roomResult">

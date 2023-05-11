@@ -47,6 +47,8 @@ public interface HotelBookingMapper {
 	//Api
 	public List<User> getUsers();
 	
+	public User getUserById(int id);
+	
 	public List<Room> getRooms();
 	
 	public List<Booking> getBookings();
