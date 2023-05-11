@@ -37,9 +37,13 @@ public class HotelBookingService {
 	public User checkEmail(String email) {
 		return this.hotelBookingMapper.checkEmail(email);
 	}
-	
+
 	public Room checkInRoom(int roomId) {
 		return this.hotelBookingMapper.checkInRoom(roomId);
+	}
+
+	public int checkOutRoom(int bookingId, int roomId, int userId) {
+		return this.hotelBookingMapper.checkOutRoom(bookingId, roomId, userId);
 	}
 
 	public List<Booking> getBooking(int userId) {

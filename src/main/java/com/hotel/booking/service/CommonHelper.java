@@ -36,6 +36,8 @@ public class CommonHelper {
 	public void msgDeliveryAgent(Model model, HttpSession session) {
 		// screen/index.html => input 'order-success'
 		model.addAttribute("orderSuccess", session.getAttribute("orderSuccess"));
+		model.addAttribute("errorMessage", session.getAttribute("errorMessage"));
 		session.removeAttribute("orderSuccess");
+		session.removeAttribute("errorMessage");
 	}
 }

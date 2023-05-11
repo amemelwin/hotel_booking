@@ -31,6 +31,9 @@ public interface HotelBookingMapper {
 	
 	// checkInRoom
 	public Room checkInRoom(@Param("roomId") int roomId);
+	
+	// checkOutRoom
+	public int checkOutRoom(@Param("bookingId") int bookingId,@Param("roomId") int roomId,@Param("userId") int userId);
 
 	// Create User
 	public void createUser(SignUpForm signUpForm);

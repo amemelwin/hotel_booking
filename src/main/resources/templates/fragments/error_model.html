@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="image/x-icon" href="https://cdn.qiita.com/assets/favicons/public/production-c620d3e403342b1022967ba5e3db1aaa.ico">
+    <link rel="apple-touch-icon" type="image/png" href="https://cdn.qiita.com/assets/favicons/public/apple-touch-icon-ec5ba42a24ae923f16825592efdc356f.png">
+    <title th:text="${title}"></title>
+    <link 
+    	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    	rel="stylesheet"
+    	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+    	crossorigin="anonymous" 
+    />
+    <link 
+    	rel="stylesheet" 
+    	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" 
+    />
+    <script 
+    	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    	integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    	crossorigin="anonymous" 
+    >
+    </script>
+</head>
+<body>
+ 	<!-- Modal -->
+	<div th:fragment="errorModel" class="modal fade" id="errorModel" tabindex="-1"
+		role="dialog" aria-labelledby="cancel room model"
+		aria-hidden="true" >
+		<div class="modal-dialog modal-dialog-centered" role="document" >
+			<div class="modal-content" style="border-radius: 20px">
+				<div class="modal-header">
+					<h5 class="modal-title d-flex flex-row items-center justify-content-center w-100" id="exampleModalLongTitle">データ不整合エラー!</h5>
+					<!-- id="cancelRoomModel" -->
+					<div class="btn btn-outline" id="errorModel-close"><i class="bi bi-x-lg h2" style="color:#CDCDCD"></i></div>
+				</div>
+				<div th:name="modal-body" class="modal-body text-center my-5"></div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

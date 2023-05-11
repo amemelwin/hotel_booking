@@ -4,6 +4,7 @@
 <body>
 	<!-- reciever -->
 	<input type="hidden" name="order-success" th:value="${orderSuccess}">
+	<input type="hidden" name="error-message" th:value="${errorMessage}">
 	<!-- reciever -->
 	
 	<div th:replace="fragments/header.html :: header(Auth=${Auth})"></div>
@@ -54,6 +55,7 @@
 	<!-- MOdels -->
 	<div th:replace="fragments/cancel_model :: cancelRoomModel"></div>
 	<div th:replace="fragments/success_model :: successBookingModel"></div>
+	<div th:replace="fragments/error_model :: errorModel"></div>
 
 	<script>
 		$(document).ready(function() {
@@ -88,6 +90,20 @@
 				$("#successBookingModel").modal('show');
 			}
 			// success Model
+			
+			// errorModel
+			$('#errorModel-close').click(()=>{
+				$('#errorModel').modal('hide');
+			})
+			
+			// check msg from msgDeliveryAgent
+			let errorModel = $("input[name='error-message']");
+			if(errorModel.attr('value')){
+				console.log(errorModel.attr('value'));
+				$("#errorModel > div > div > div[name='modal-body']").text(errorModel.attr('value'));
+				$("#errorModel").modal('show');
+			}
+			// errorModel
 			
 			// select
 			$('.room').click(function(e) {
