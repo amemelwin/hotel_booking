@@ -142,7 +142,6 @@ public class HotelBookingController {
 	public String cancelBooking(@ModelAttribute RoomBooking room, HttpSession session) {
 		User auth = this.commonHelper.checkAuth(session);
 		if (auth != null) {
-			System.out.println(room);
 			this.hotelBookingService.cancelBooking(room.getBookingId());
 			this.hotelBookingService.updateRoom(room.getId(), 0);
 			return "redirect:/";
