@@ -8,23 +8,28 @@
  	 	アカウント登録
  	 </div> 	
  	<div class="mx-auto w-50 border "  style="border-radius:0 0 10px 10px ;" >
-	   	<form th:action=@{/signup} class="py-3 px-5"  th:object="${user}" method="post">
+	   	<form th:action=@{/signup} class="py-3 px-5"  th:object="${signUpForm}" method="post">
 		  <div class="form-group my-4" >
-		  	<div th:text="*{username}"></div>
 		    <label for="name" class="pb-2">氏名</label>
 		    <input type="text" class="form-control py-2" th:field="*{username}" id="name" style="border-radius:10px;" >
+		    <div class="alert alert-warning" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
 		  </div>
 		   <div class="form-group my-4"  >
 		  	<label for="email" class="py-2">メール</label>
-		    <input type="email" class="form-control py-2" id="email" aria-describedby="emailHelp" style="border-radius:10px;" th:field="*{email}" >
+		    <input type="email" class="form-control py-2" th:field="*{email}" id="email" aria-describedby="emailHelp" style="border-radius:10px;"  >
+		    <div class="alert alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+		    <div class="alert alert-warning" th:if="${email_error}" th:text="${email_error}"></div>
 		  </div>
 		  <div class="form-group my-4" >
 		    <label for="password" class="py-2">パスワード</label>
-		    <input type="password" class="form-control py-2" id="password" style="border-radius:10px;" th:field="*{password}">
+		    <input type="password" class="form-control py-2" th:field="*{password}" id="password" style="border-radius:10px;">
+		    <div class="alert alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
 		  </div>
 		   <div class="form-group my-4" >
-		    <label for="passwordConfirm" class="py-2">パスワード確認</label>
-		    <input type="password" class="form-control py-2" id="passwordConfirm" style="border-radius:10px;">
+		    <label for="confirmPassword" class="py-2">パスワード確認</label>
+		    <input type="password" class="form-control py-2" th:field="*{confirmPassword}" id="confirmPassword" style="border-radius:10px;">
+		    <div class="alert alert-warning" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>
+		    <div class="alert alert-warning" th:if="${confirm_error}" th:text="${confirm_error}"></div>
 		  </div>
 		  <button type="submit" class="btn btn-primary py-2 my-5 d-flex flex-row col-sm-12 justify-content-center" style="border-radius:10px;">登録</button>	
  		</form>

@@ -9,34 +9,36 @@ import com.hotel.booking.entity.Booking;
 import com.hotel.booking.entity.Room;
 import com.hotel.booking.entity.RoomBooking;
 import com.hotel.booking.entity.User;
+import com.hotel.booking.form.SignUpForm;
 
 @Mapper
 public interface HotelBookingMapper {
-	
+
 	// get room booking
 	public List<RoomBooking> getRoomBooking();
-	
+
 	// create booking
 	public void createBooking(@Param("userId") int userId, @Param("roomId") int roomId);
-	
+
 	// update room
-	public void updateRoom(@Param("roomId") int roomId,@Param("lendFlag") int lendFlag);
-	
+	public void updateRoom(@Param("roomId") int roomId, @Param("lendFlag") int lendFlag);
+
 	// cancel Booking
 	public void cancelBooking(@Param("bookingId") int bookingId);
-	
-	public List<User> getUser();
-	
-	// Get room
-	public List<Room> getRoom();
-	
+
 	// Get booking
 	public List<Booking> getBooking(@Param("userId") int userId);
 	
+	// checkInRoom
+	public Room checkInRoom(@Param("roomId") int roomId);
+
 	// Create User
-	public void createUser(User user);
-	
+	public void createUser(SignUpForm signUpForm);
+
+	// Check Email Exist
+	public User checkEmail(@Param("email") String email);
+
 	// login
-	public User login(@Param("email") String email,@Param("password") String password);
-	
+	public User login(@Param("email") String email, @Param("password") String password);
+
 }

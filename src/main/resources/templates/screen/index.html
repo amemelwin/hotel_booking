@@ -49,7 +49,7 @@
 				class="btn btn-primary mt-3 d-flex flex-row justify-content-center"
 				style="height: 45px; border-radius: 10px">予約</div>
 		</div>
-
+		<div class="my-5 py-5"></div>
 	</div>
 	<!-- MOdels -->
 	<div th:replace="fragments/cancel_model :: cancelRoomModel"></div>
@@ -148,7 +148,7 @@
 			$("#cretae-booking").click((e)=>{
 				let roomId = $('input[name="id"]').attr('value');
 				console.log(roomId);
-				if(roomId){
+				if(roomId>0){
 					$("form[name='create-booking']").submit();
 				}else{
 					alert("Please Select Room First");
